@@ -1,4 +1,4 @@
-//  Sesión 28 - 20/10/2021
+//  Sesión 29 - 21/10/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -14,7 +14,7 @@ typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 
 nodo *raiz = NULL;			// DEfiendo una lista ligada vacía
 
-void insert(char dato)	//  dato == 'b'
+void insert(char dato)	//  dato == 'c'
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -32,15 +32,50 @@ void insert(char dato)	//  dato == 'b'
 	else						// falso: la lista no está vacía
 	{
 		nodo *ultimo = raiz;
-		sig = NULL;
+		while( ultimo -> sig != NULL )		//  ¿ultimo No es el último nodo de la lista?
+		{								//  Verdadero: Es el ultimo nodo de la lista
+			ultimo = ultimo -> sig;			//  Avanzo al siguiente nodo de la lista
+		}
+		ultimo->sig = nuevo;
+	}	
+}
+
+void imprimeLista()
+{
+	nodo *recorre = raiz;
+	while( recorre != NULL )		//  ¿ultimo No es el último nodo de la lista?
+	{								//  Verdadero: Es el ultimo nodo de la lista
+		printf("%c, ", recorre->info);
+		recorre = recorre -> sig;			//  Avanzo al siguiente nodo de la lista
 	}
-	
+	putchar('\n');
 }
 
 int main(void)
 {
-	int edad;
-	nodo primero;
+	imprimeLista();
+
+	insert('R');
+	insert('o');
+	insert('b');
+	insert('e');
+	insert('r');
+	insert('t');
+	insert('o');
+
+	imprimeLista();
+
+	insert(' ');
+	insert('S');
+	insert('a');
+	insert('l');
+	insert('a');
+	insert('z');
+	insert('a');
+	insert('r');
+
+	imprimeLista();
+
 	system("pause");
 	return 1;
 }
