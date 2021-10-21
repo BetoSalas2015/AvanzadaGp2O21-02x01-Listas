@@ -1,4 +1,4 @@
-//  Sesión 27 - 18/10/2021
+//  Sesión 28 - 20/10/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -14,7 +14,7 @@ typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 
 nodo *raiz = NULL;			// DEfiendo una lista ligada vacía
 
-void insert(char dato)
+void insert(char dato)	//  dato == 'b'
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -31,6 +31,8 @@ void insert(char dato)
 	} 
 	else						// falso: la lista no está vacía
 	{
+		nodo *ultimo = raiz;
+		sig = NULL;
 	}
 	
 }
