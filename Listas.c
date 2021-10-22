@@ -14,7 +14,7 @@ typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 
 nodo *raiz = NULL;			// DEfiendo una lista ligada vacía
 
-void insert(char dato)	//  dato == 'c'
+void insert(char dato)	
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -40,6 +40,29 @@ void insert(char dato)	//  dato == 'c'
 	}	
 }
 
+void insert1(char dato)	
+{
+	nodo *nuevo = NULL;
+	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
+	if( nuevo == NULL )					// Ya no hay memoria - Error de Overflow
+	{
+		printf("Ya no hay memoria disponible.");
+		return;
+	}
+	nuevo->info = dato;
+	nuevo->sig = NULL;
+	if( raiz == NULL )			// La lista está vacía?
+	{							//  Verdadero: la lista está vacía
+		raiz = nuevo;
+	} 
+	else						// falso: la lista no está vacía
+	{
+		nodo *ultimo = raiz;
+		raiz = nuevo;
+		raiz ->sig = ultimo;
+	}	
+}
+
 void imprimeLista()
 {
 	nodo *recorre = raiz;
@@ -55,24 +78,24 @@ int main(void)
 {
 	imprimeLista();
 
-	insert('R');
-	insert('o');
-	insert('b');
-	insert('e');
-	insert('r');
-	insert('t');
-	insert('o');
+	insert1('R');
+	insert1('o');
+	insert1('b');
+	insert1('e');
+	insert1('r');
+	insert1('t');
+	insert1('o');
 
 	imprimeLista();
 
-	insert(' ');
-	insert('S');
-	insert('a');
-	insert('l');
-	insert('a');
-	insert('z');
-	insert('a');
-	insert('r');
+	insert1(' ');
+	insert1('S');
+	insert1('a');
+	insert1('l');
+	insert1('a');
+	insert1('z');
+	insert1('a');
+	insert1('r');
 
 	imprimeLista();
 
