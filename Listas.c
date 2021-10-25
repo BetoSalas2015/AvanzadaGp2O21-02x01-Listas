@@ -1,4 +1,4 @@
-//  Sesión 29 - 21/10/2021
+//  Sesión 30 - 25/10/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -40,6 +40,44 @@ void insert(char dato)
 	}	
 }
 
+void insertn(char dato, int n)	
+{
+	nodo *nuevo = NULL;
+	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
+	if( nuevo == NULL )					// Ya no hay memoria - Error de Overflow
+	{
+		printf("Ya no hay memoria disponible.");
+		return;
+	}
+	nuevo->info = dato;
+	nuevo->sig = NULL;
+	if( raiz == NULL )			// La lista está vacía?
+	{							//  Verdadero: la lista está vacía
+		raiz = nuevo;
+	} 
+	if(n == 1)
+	{
+		nodo *ultimo = raiz;
+		raiz = nuevo;
+		raiz ->sig = ultimo;
+	}
+	if(n > 2)						//  Para el resto de los nodos
+	{
+		int cont = 1;
+		nodo *anterior = raiz;		// Posicionamos anterior
+		nodo *siguiente = anterior -> sig;	// Posicionamos siguiente
+		while(cont != n - 1)		// El error fue que era diferente de en lugar de igual a
+		{
+			anterior = anterior ->sig;
+			siguiente = siguiente->sig;
+			cont++;
+		}
+		anterior ->sig = nuevo;		//  Insertamos el nuevo nodo
+		nuevo -> sig = siguiente;
+	}	
+}
+
+
 void insert1(char dato)	
 {
 	nodo *nuevo = NULL;
@@ -78,24 +116,28 @@ int main(void)
 {
 	imprimeLista();
 
-	insert1('R');
-	insert1('o');
-	insert1('b');
-	insert1('e');
-	insert1('r');
-	insert1('t');
-	insert1('o');
+	insert('R');
+	insert('o');
+	insert('b');
+	insert('e');
+	insert('r');
+	insert('t');
+	insert('o');
 
 	imprimeLista();
 
-	insert1(' ');
-	insert1('S');
-	insert1('a');
-	insert1('l');
-	insert1('a');
-	insert1('z');
-	insert1('a');
-	insert1('r');
+	insert(' ');
+	insert('S');
+	insert('a');
+	insert('l');
+	insert('a');
+	insert('z');
+	insert('a');
+	insert('r');
+
+	imprimeLista();
+
+	insertn('m', 5);
 
 	imprimeLista();
 
