@@ -1,4 +1,4 @@
-//  Sesión 30 - 25/10/2021
+//  Sesión 31 - 27/10/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -21,6 +21,7 @@ void insert(char dato)
 	if( nuevo == NULL )					// Ya no hay memoria - Error de Overflow
 	{
 		printf("Ya no hay memoria disponible.");
+		system("pause");
 		return;
 	}
 	nuevo->info = dato;
@@ -47,6 +48,7 @@ void insertn(char dato, int n)
 	if( nuevo == NULL )					// Ya no hay memoria - Error de Overflow
 	{
 		printf("Ya no hay memoria disponible.");
+		system("pause");
 		return;
 	}
 	nuevo->info = dato;
@@ -66,7 +68,7 @@ void insertn(char dato, int n)
 		int cont = 1;
 		nodo *anterior = raiz;		// Posicionamos anterior
 		nodo *siguiente = anterior -> sig;	// Posicionamos siguiente
-		while(cont != n - 1)		// El error fue que era diferente de en lugar de igual a
+		while((cont != n - 1) && (anterior->sig != NULL) )		// El error fue que era diferente de en lugar de igual a
 		{
 			anterior = anterior ->sig;
 			siguiente = siguiente->sig;
@@ -85,6 +87,7 @@ void insert1(char dato)
 	if( nuevo == NULL )					// Ya no hay memoria - Error de Overflow
 	{
 		printf("Ya no hay memoria disponible.");
+		system("pause");
 		return;
 	}
 	nuevo->info = dato;
@@ -112,6 +115,49 @@ void imprimeLista()
 	putchar('\n');
 }
 
+char remueve(int n)
+{
+	nodo *anterior = NULL;
+	nodo *siguiente = NULL;
+	nodo *elimina = NULL;
+	char dato;
+	if(raiz != NULL)			//  Si podemos sacar información de la lista
+	{
+		if(n == 1)
+		{
+			elimina = raiz;
+			siguiente = elimina->sig;
+			raiz = siguiente;
+			dato = elimina ->info;
+			free(elimina);		// Liberamos memoria reservada por malloc
+			return dato;
+		}
+		else
+		{
+			int cont = 1;
+			anterior = raiz;
+			while((cont != n - 1) && (anterior->sig != NULL) )		// El error fue que era diferente de en lugar de igual a
+			{
+				anterior = anterior ->sig;
+				cont++;
+			}
+			elimina = anterior->sig;
+			siguiente = elimina -> sig;
+			anterior ->sig = siguiente;
+			dato = elimina ->info;
+			free(elimina);		// Liberamos memoria reservada por malloc
+			return dato;
+		}
+	}
+	else            //No hay nada que sacar - Error deUnderflow!
+	{
+		printf("No hay nada que sacar de la lista");
+		system("pause");
+		return;
+	}
+}
+
+
 int main(void)
 {
 	imprimeLista();
@@ -137,7 +183,11 @@ int main(void)
 
 	imprimeLista();
 
-	insertn('m', 5);
+	insertn('m', 25);
+
+	imprimeLista();
+
+	remueve(5);
 
 	imprimeLista();
 
