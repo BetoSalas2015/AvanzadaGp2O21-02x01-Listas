@@ -1,4 +1,4 @@
-//  Sesión 31 - 27/10/2021
+//  Sesión 32 - 8/10/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -115,7 +115,7 @@ void imprimeLista()
 	putchar('\n');
 }
 
-char remueve(int n)
+char remueven(int n)
 {
 	nodo *anterior = NULL;
 	nodo *siguiente = NULL;
@@ -136,10 +136,16 @@ char remueve(int n)
 		{
 			int cont = 1;
 			anterior = raiz;
-			while((cont != n - 1) && (anterior->sig != NULL) )		// El error fue que era diferente de en lugar de igual a
+			while((cont != n - 1) )	
 			{
 				anterior = anterior ->sig;
 				cont++;
+				if(anterior->sig == NULL)		//  Es elúltimo nodo de la lista?
+					{
+						printf("No existe el nodo %d \n", n);
+						//system("pause");
+						return '\0';
+					}
 			}
 			elimina = anterior->sig;
 			siguiente = elimina -> sig;
@@ -157,6 +163,28 @@ char remueve(int n)
 	}
 }
 
+char remueve1()
+{
+	nodo *anterior = NULL;
+	nodo *siguiente = NULL;
+	nodo *elimina = NULL;
+	char dato;
+	if(raiz != NULL)			//  Si podemos sacar información de la lista
+	{
+		elimina = raiz;
+		siguiente = elimina->sig;
+		raiz = siguiente;
+		dato = elimina ->info;
+		free(elimina);		// Liberamos memoria reservada por malloc
+		return dato;
+	}
+	else            //No hay nada que sacar - Error deUnderflow!
+	{
+		printf("No hay nada que sacar de la lista");
+		system("pause");
+		return;
+	}
+}
 
 int main(void)
 {
@@ -187,7 +215,9 @@ int main(void)
 
 	imprimeLista();
 
-	remueve(5);
+	remueve1();
+	remueve1();
+	remueve1();
 
 	imprimeLista();
 
