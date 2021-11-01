@@ -1,4 +1,4 @@
-//  Sesión 32 - 8/10/2021
+//  Sesión 33 - 1/11/2021
 
 #include <stdio.h>		//  par ala I/O del programa
 #include <stdlib.h>		//  para system()
@@ -12,9 +12,9 @@ struct Nodo
 
 typedef struct Nodo nodo;	//  Definimos el nuevo tipo de dato nodo
 
-nodo *raiz = NULL;			// DEfiendo una lista ligada vacía
+nodo *raiz = NULL;			// DEfiniendo una lista ligada vacía
 
-void insert(char dato)	
+nodo *insert(nodo *raiz, char dato)	
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -22,7 +22,7 @@ void insert(char dato)
 	{
 		printf("Ya no hay memoria disponible.");
 		system("pause");
-		return;
+		return raiz;
 	}
 	nuevo->info = dato;
 	nuevo->sig = NULL;
@@ -39,9 +39,10 @@ void insert(char dato)
 		}
 		ultimo->sig = nuevo;
 	}	
+	return raiz;
 }
 
-void insertn(char dato, int n)	
+nodo *insertn(nodo *raiz, char dato, int n)	
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -49,7 +50,7 @@ void insertn(char dato, int n)
 	{
 		printf("Ya no hay memoria disponible.");
 		system("pause");
-		return;
+		return raiz;
 	}
 	nuevo->info = dato;
 	nuevo->sig = NULL;
@@ -63,7 +64,7 @@ void insertn(char dato, int n)
 		raiz = nuevo;
 		raiz ->sig = ultimo;
 	}
-	if(n > 2)						//  Para el resto de los nodos
+	if(n >= 2)						//  Para el resto de los nodos
 	{
 		int cont = 1;
 		nodo *anterior = raiz;		// Posicionamos anterior
@@ -77,10 +78,11 @@ void insertn(char dato, int n)
 		anterior ->sig = nuevo;		//  Insertamos el nuevo nodo
 		nuevo -> sig = siguiente;
 	}	
+	return raiz;
 }
 
 
-void insert1(char dato)	
+nodo *insert1(nodo *raiz, char dato)	
 {
 	nodo *nuevo = NULL;
 	nuevo = (nodo *) malloc( sizeof(nodo) ); // Creamos el nuevo nodo y guardamos su dirección en nuevo
@@ -88,7 +90,7 @@ void insert1(char dato)
 	{
 		printf("Ya no hay memoria disponible.");
 		system("pause");
-		return;
+		return raiz;
 	}
 	nuevo->info = dato;
 	nuevo->sig = NULL;
@@ -102,9 +104,10 @@ void insert1(char dato)
 		raiz = nuevo;
 		raiz ->sig = ultimo;
 	}	
+	return raiz;
 }
 
-void imprimeLista()
+void imprimeLista(nodo *raiz)
 {
 	nodo *recorre = raiz;
 	while( recorre != NULL )		//  ¿ultimo No es el último nodo de la lista?
@@ -115,111 +118,173 @@ void imprimeLista()
 	putchar('\n');
 }
 
-char remueven(int n)
-{
-	nodo *anterior = NULL;
-	nodo *siguiente = NULL;
-	nodo *elimina = NULL;
-	char dato;
-	if(raiz != NULL)			//  Si podemos sacar información de la lista
-	{
-		if(n == 1)
-		{
-			elimina = raiz;
-			siguiente = elimina->sig;
-			raiz = siguiente;
-			dato = elimina ->info;
-			free(elimina);		// Liberamos memoria reservada por malloc
-			return dato;
-		}
-		else
-		{
-			int cont = 1;
-			anterior = raiz;
-			while((cont != n - 1) )	
-			{
-				anterior = anterior ->sig;
-				cont++;
-				if(anterior->sig == NULL)		//  Es elúltimo nodo de la lista?
-					{
-						printf("No existe el nodo %d \n", n);
-						//system("pause");
-						return '\0';
-					}
-			}
-			elimina = anterior->sig;
-			siguiente = elimina -> sig;
-			anterior ->sig = siguiente;
-			dato = elimina ->info;
-			free(elimina);		// Liberamos memoria reservada por malloc
-			return dato;
-		}
-	}
-	else            //No hay nada que sacar - Error deUnderflow!
-	{
-		printf("No hay nada que sacar de la lista");
-		system("pause");
-		return;
-	}
-}
+//char remueven(int n)
+//{
+//	nodo *anterior = NULL;
+//	nodo *siguiente = NULL;
+//	nodo *elimina = NULL;
+//	char dato;
+//	if(raiz != NULL)			//  Si podemos sacar información de la lista
+//	{
+//		if(n == 1)
+//		{
+//			elimina = raiz;
+//			siguiente = elimina->sig;
+//			raiz = siguiente;
+//			dato = elimina ->info;
+//			free(elimina);		// Liberamos memoria reservada por malloc
+//			return dato;
+//		}
+//		else
+//		{
+//			int cont = 1;
+//			anterior = raiz;
+//			while((cont != n - 1) )	
+//			{
+//				anterior = anterior ->sig;
+//				cont++;
+//				if(anterior->sig == NULL)		//  Es elúltimo nodo de la lista?
+//					{
+//						printf("No existe el nodo %d \n", n);
+//						//system("pause");
+//						return '\0';
+//					}
+//			}
+//			elimina = anterior->sig;
+//			siguiente = elimina -> sig;
+//			anterior ->sig = siguiente;
+//			dato = elimina ->info;
+//			free(elimina);		// Liberamos memoria reservada por malloc
+//			return dato;
+//		}
+//	}
+//	else            //No hay nada que sacar - Error deUnderflow!
+//	{
+//		printf("No hay nada que sacar de la lista");
+//		system("pause");
+//		return;
+//	}
+//}
+//
+//char remueve()
+//{
+//	nodo *anterior = NULL;
+//	nodo *siguiente = NULL;
+//	nodo *elimina = NULL;
+//	char dato;
+//	if(raiz != NULL)			//  Si podemos sacar información de la lista
+//	{
+//		if(n == 1)
+//		{
+//			elimina = raiz;
+//			siguiente = elimina->sig;
+//			raiz = siguiente;
+//			dato = elimina ->info;
+//			free(elimina);		// Liberamos memoria reservada por malloc
+//			return dato;
+//		}
+//		else
+//		{
+//			int cont = 1;
+//			anterior = raiz;
+//			while((cont != n - 1) )	
+//			{
+//				anterior = anterior ->sig;
+//				cont++;
+//				if(anterior->sig == NULL)		//  Es elúltimo nodo de la lista?
+//					{
+//						printf("No existe el nodo %d \n", n);
+//						//system("pause");
+//						return '\0';
+//					}
+//			}
+//			elimina = anterior->sig;
+//			siguiente = elimina -> sig;
+//			anterior ->sig = siguiente;
+//			dato = elimina ->info;
+//			free(elimina);		// Liberamos memoria reservada por malloc
+//			return dato;
+//		}
+//	}
+//	else            //No hay nada que sacar - Error deUnderflow!
+//	{
+//		printf("No hay nada que sacar de la lista");
+//		system("pause");
+//		return;
+//	}
+//}
+//
+//char remueve1()
+//{
+//	nodo *siguiente = NULL, *elimina = NULL;
+//	char dato;
+//	if(raiz != NULL)			//  Si podemos sacar información de la lista
+//	{
+//		elimina = raiz;
+//		siguiente = elimina->sig;
+//		raiz = siguiente;
+//		dato = elimina ->info;
+//		free(elimina);		// Liberamos memoria reservada por malloc
+//		return dato;
+//	}
+//	else            //No hay nada que sacar - Error deUnderflow!
+//	{
+//		printf("No hay nada que sacar de la lista");
+//		system("pause");
+//		return;
+//	}
+//}
 
-char remueve1()
+nodo *invert(nodo *raiz)
 {
-	nodo *anterior = NULL;
-	nodo *siguiente = NULL;
-	nodo *elimina = NULL;
-	char dato;
-	if(raiz != NULL)			//  Si podemos sacar información de la lista
+	nodo *raiz2 =  NULL;
+	nodo *recorre = raiz;
+	while(recorre != NULL)
 	{
-		elimina = raiz;
-		siguiente = elimina->sig;
-		raiz = siguiente;
-		dato = elimina ->info;
-		free(elimina);		// Liberamos memoria reservada por malloc
-		return dato;
+		raiz2 = insert1(raiz2, recorre->info);
+		recorre = recorre->sig;
 	}
-	else            //No hay nada que sacar - Error deUnderflow!
-	{
-		printf("No hay nada que sacar de la lista");
-		system("pause");
-		return;
-	}
+	return raiz2;
 }
 
 int main(void)
 {
-	imprimeLista();
+	nodo *nombre = NULL;
+	nodo *apellido = NULL;
+	nodo *materno = NULL;
+	nodo *invertida = NULL;
 
-	insert('R');
-	insert('o');
-	insert('b');
-	insert('e');
-	insert('r');
-	insert('t');
-	insert('o');
+	nombre = insert(nombre, 'R');
+	nombre = insert(nombre, 'o');
+	nombre = insert(nombre, 'b');
+	nombre = insert(nombre, 'e');
+	nombre = insert(nombre, 'r');
+	nombre = insert(nombre, 't');
+	nombre = insert(nombre, 'o');
 
-	imprimeLista();
+	apellido = insert1(apellido, 'S');
+	apellido = insert1(apellido, 'a');
+	apellido = insert1(apellido, 'l');
+	apellido = insert1(apellido, 'a');
+	apellido = insert1(apellido, 'z');
+	apellido = insert1(apellido, 'a');
+	apellido = insert1(apellido, 'r');
 
-	insert(' ');
-	insert('S');
-	insert('a');
-	insert('l');
-	insert('a');
-	insert('z');
-	insert('a');
-	insert('r');
+	materno = insertn(materno, 'M', 50);
+	materno = insertn(materno, 'a', 1);
+	materno = insertn(materno, 'r', 1);
+	materno = insertn(materno, 'q', 2);
+	materno = insertn(materno, 'u', 2);
+	materno = insertn(materno, 'e', 4);
+	materno = insertn(materno, 'z', 5);
 
-	imprimeLista();
+	imprimeLista(nombre);
+	imprimeLista(apellido);
+	imprimeLista(materno);
 
-	insertn('m', 25);
+	invertida = invert(materno);
 
-	imprimeLista();
-
-	remueve1();
-	remueve1();
-	remueve1();
-
-	imprimeLista();
+	imprimeLista(invertida);
 
 	system("pause");
 	return 1;
